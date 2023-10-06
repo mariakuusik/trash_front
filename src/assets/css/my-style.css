@@ -1,0 +1,56 @@
+/* Muudab  tabeli rea või ikooni peal hoverdades kursori pointeriks*/
+.fingerPointer {
+    cursor: pointer;
+}
+
+/* Input area fookuse värv(border color)*/
+.my-focus-area:focus {
+    border-color: rgba(195, 197, 196, 0.8);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(199, 198, 198);
+}
+
+.image-size{
+    width: 75%;
+}
+
+.hoverable-link {
+    cursor: pointer;
+}
+.my-standard-button {
+    padding: 5px 10px;
+    border: 1px solid #a0ab93;
+    border-radius: 10px;
+    background-color: #88b05d;
+    color: black;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px #c4c4c4;
+}
+
+.my-standard-button:hover{
+    color: black;
+    background-color: #72934e;
+    box-shadow: 3px 3px 6px #949494;
+}
+
+.my-warning-button {
+    padding: 10px 20px;
+    border: 1px solid #a94b4b;
+    border-radius: 10px;
+    background-color: #ec6767;
+    color: black;
+    cursor: pointer;
+}
+
+.my-warning-button:hover{
+    background-color: #da6060;
+}
+
+.inactive-product {
+    color: #969696 !important;
+}
+
+.custom-warning-text{
+    color: #b61313;
+    font-weight: bold;
+}
