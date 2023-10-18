@@ -1,5 +1,5 @@
 <template>
-<ChangeProductInfoModal ref="ChangeProductInfoModalRef"/>
+  <ChangeMaterialsModal :product-response="productResponse" @update-product="handleProductUpdate"/>
   <div class="container text-center">
     <div class="row">
 
@@ -8,8 +8,8 @@
           <li class="list-group-item"><h2 class="display-5"> {{ productResponse.productName }}</h2></li>
           <li class="list-group-item"><h2 class="display-6">UPC kood: {{ productResponse.productUpc }}</h2></li>
         </ul>
-        <button type="button" class="btn my-standard-button" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                data-bs-whatever="@fat">Muuda andmeid
+        <button type="button" class="btn my-standard-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+          Muuda toote andmeid
         </button>
 
         <div class="information-display-style">
@@ -37,8 +37,8 @@
 
       </div>
 
-      <div class="col col-lg-6 bg-success">
-        TOOTE PILT
+      <div class="col col-lg-6">
+        <ProductImage :image-data-base64="imageResponse.imageData"/>
       </div>
 
     </div>
@@ -50,11 +50,13 @@
 <script>
 import data from "bootstrap/js/src/dom/data";
 import {useRoute} from "vue-router";
-import ChangeProductInfoModal from "@/components/modal/ChangeProductInfoModal.vue";
+import ChangeMaterialsModal from "@/components/modal/ChangeMaterialsModal.vue";
+import ImageInput from "@/components/ImageInput.vue";
+import ProductImage from "@/components/ProductImage.vue";
 
 export default {
   name: "productProfile",
-  components: {ChangeProductInfoModal},
+  components: {ProductImage, ImageInput, ChangeMaterialsModal},
   data() {
     return {
       productId: Number(useRoute().query.productId),
@@ -72,6 +74,9 @@ export default {
             }
           }
         ]
+      },
+      imageResponse: {
+        imageData: ''
       },
       errorResponse:
           {
@@ -93,17 +98,34 @@ export default {
         this.errorResponse = error.response.data
       })
     },
-  },
 
-  openChangeProductInfoModal() {
-    this.$refs.ChangeProductInfoModalRef.$refs.ModalRef.openModal()
-  },
+    handleProductUpdate() {
+      this.$http.put("/products/profile"
+      ).then(response => {
+        const responseBody = response.data
+      }).catch(error => {
+        const errorResponseBody = error.response.data
+      })
+    },
+    getProductImage() {
+      this.$http.get("/image", {
+            params: {
+              productId: Number(useRoute().query.productId)
+            }
+          }
+      ).then(response => {
+        this.imageResponse = response.data
+      }).catch(error => {
+        const errorResponseBody = error.response.data
+      })
+    },
 
+
+  },
   beforeMount() {
     this.getProductProfile()
+    this.getProductImage()
   }
-
-
 }
 </script>
 
@@ -117,7 +139,5 @@ export default {
   margin-top: 50px;
   margin-bottom: 20px;
 }
-
-
 
 </style>

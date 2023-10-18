@@ -14,6 +14,7 @@
             <li><a class="dropdown-item" href="#" @click="selectedFilter='Mitteaktiivsed'">Mitteaktiivsed</a></li>
             <li><a class="dropdown-item" href="#" @click="selectedFilter='Kõik tooted'">Kõik tooted</a></li>
           </ul>
+          <button @click="$router.push({name: 'newProfileRoute'})" class="btn btn-outline-success">Lisa uus toode</button>
         </div>
 
         <table class="table table-responsive-sm align-middle">
@@ -63,8 +64,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-import {vShow} from "vue";
 import router from "@/router";
 
 

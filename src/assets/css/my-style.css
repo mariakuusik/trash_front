@@ -10,13 +10,14 @@
     box-shadow: 0 0 0 0.25rem rgb(199, 198, 198);
 }
 
-.image-size{
+.image-size {
     width: 75%;
 }
 
 .hoverable-link {
     cursor: pointer;
 }
+
 .my-standard-button {
     padding: 5px 10px;
     border: 1px solid #a0ab93;
@@ -27,7 +28,7 @@
     box-shadow: 2px 2px 4px #c4c4c4;
 }
 
-.my-standard-button:hover{
+.my-standard-button:hover {
     color: black;
     background-color: #72934e;
     box-shadow: 3px 3px 6px #949494;
@@ -42,7 +43,7 @@
     cursor: pointer;
 }
 
-.my-warning-button:hover{
+.my-warning-button:hover {
     background-color: #da6060;
 }
 
@@ -50,7 +51,7 @@
     color: #969696 !important;
 }
 
-.custom-warning-text{
+.custom-warning-text {
     color: #b61313;
     font-weight: bold;
 }
