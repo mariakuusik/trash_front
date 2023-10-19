@@ -86,7 +86,6 @@ export default {
       this.newProduct.imageData = imageDataBase64
     },
 
-
     mandatoryFieldsAreFilled() {
       return this.newProduct.productName.length > 0 && this.newProduct.productUpc.length > 0
     },

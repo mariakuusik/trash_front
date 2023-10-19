@@ -11,30 +11,10 @@
         <button type="button" class="btn my-standard-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
           Muuda toote andmeid
         </button>
-
         <div class="information-display-style">
-          <table class="table">
-            <thead>
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">Komponent</th>
-              <th scope="col">Materjali nimi</th>
-              <th scope="col">Materjali kirjeldus</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="(component, sequenceCounter) in productResponse.componentsResponse">
-              <th>{{ sequenceCounter + 1 }}</th>
-              <td>{{ component.componentName }}</td>
-              <td>{{ component.materialResponse.materialName }}</td>
-              <td>{{ component.materialResponse.materialDescription }}</td>
-              <td></td>
-            </tr>
-            </tbody>
-          </table>
+          <ProductComponentsAndMaterialsTable :product-response="productResponse"/>
         </div>
         <button class="btn my-standard-button">Muuda komponente ja materjale</button>
-
       </div>
 
       <div class="col col-lg-6">
@@ -48,15 +28,14 @@
 
 
 <script>
-import data from "bootstrap/js/src/dom/data";
 import {useRoute} from "vue-router";
 import ChangeMaterialsModal from "@/components/modal/ChangeMaterialsModal.vue";
-import ImageInput from "@/components/ImageInput.vue";
 import ProductImage from "@/components/ProductImage.vue";
+import ProductComponentsAndMaterialsTable from "@/views/ProductComponentsAndMaterialsTable.vue";
 
 export default {
   name: "productProfile",
-  components: {ProductImage, ImageInput, ChangeMaterialsModal},
+  components: {ProductComponentsAndMaterialsTable, ProductImage, ChangeMaterialsModal},
   data() {
     return {
       productId: Number(useRoute().query.productId),

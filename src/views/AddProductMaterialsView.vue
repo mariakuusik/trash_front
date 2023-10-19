@@ -2,8 +2,10 @@
   <h1>Add Materials to Product {{ productName }} </h1>
 
   <div class="container">
+
     <div class="row justify-content-center">
       <div class="col col-5 text-center">
+        <AlertSuccess :success-message="successMessage"></AlertSuccess>
         <select v-model="selectedMaterialId" @change="setMaterialIdAndSendRequest" class="form-select">
           <option selected disabled>Choose material</option>
           <option v-for="material in materialsResponse" :value="material.materialId" :key="material">
@@ -24,7 +26,14 @@
       <div v-show="selectedMaterialId!==0">
         <button @click="addComponentToProduct" class="btn my-standard-button">Add component</button>
       </div>
+    </div>
 
+    <div class="row justify-content-center">
+
+      <div class="col col-5 text-center">
+        <h2>Added components</h2>
+        <ProductComponentsAndMaterialsTable :product-response="productResponse"/>
+      </div>
     </div>
 
   </div>
@@ -35,11 +44,17 @@
 
 <script>
 import {useRoute} from "vue-router";
+import AlertSuccess from "@/components/alert/AlertSuccess.vue";
+import ProductComponentsAndMaterialsTable from "@/views/ProductComponentsAndMaterialsTable.vue";
 
 export default {
   name: "AddProductMaterialsView",
+  components: {ProductComponentsAndMaterialsTable, AlertSuccess},
+  props:{
+  },
   data() {
     return {
+      successMessage: '',
       productId: Number(useRoute().query.productId),
       productName: sessionStorage.getItem('productName'),
       selectedMaterialId: 0,
@@ -61,7 +76,8 @@ export default {
         productId: this.productId,
         componentId: this.selectedComponentId
 
-      }
+      },
+      productResponse: {}
     }
   },
   methods: {
@@ -102,8 +118,30 @@ export default {
       this.addedComponent.componentId = this.selectedComponentId
       this.$http.post("/components/component", this.addedComponent
       ).then(response => {
-        console.log(this.productId)
-        console.log(this.selectedComponentId)
+        this.addedComponent.productId = 0
+        this.addedComponent.componentId = 0
+        this.handleSuccessMessage()
+        this.getProductProfile()
+      }).catch(error => {
+        const errorResponseBody = error.response.data
+      })
+    },
+
+    handleSuccessMessage() {
+      this.successMessage='New Component Added to ' + this.productName
+      setTimeout(() => {
+        this.successMessage = ''
+      }, 1500)
+    },
+
+    getProductProfile() {
+      this.$http.get("/products/profile", {
+            params: {
+              productId: this.productId,
+            }
+          }
+      ).then(response => {
+        this.productResponse = response.data
       }).catch(error => {
         const errorResponseBody = error.response.data
       })

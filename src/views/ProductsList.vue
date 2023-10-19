@@ -3,7 +3,6 @@
     <h1 class="display-5 text-center mb-5">Tere, (ettevõtte nimi)</h1>
     <div class="row justify-content-center">
       <div class="col-sm-8">
-
         <div class="dropdown">
           <a class="btn btn-outline-success dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
              aria-expanded="false">
@@ -17,43 +16,9 @@
           <button @click="$router.push({name: 'newProfileRoute'})" class="btn btn-outline-success">Add New Product</button>
         </div>
 
-        <table class="table table-responsive-sm align-middle">
-          <thead>
-          <tr>
-            <th></th>
-            <th>Product Name</th>
-            <th>UPC</th>
-            <th>Status</th>
-            <th></th>
-            <th></th>
-          </tr>
-          </thead>
-          <!--          The colon : in front of class in Vue.js indicates that you are using a dynamic or computed class binding. -->
-          <!--          When you use :class, you can dynamically assign one or more CSS classes to an element based on a condition
-                        or computed value in your Vue component.-->
-          <tbody>
-          <tr v-for="(product, sequenceCounter) in filteredProducts" :key="product.productUpc">
-            <td :class="{'inactive-product': !product.productIsActive}">{{ sequenceCounter + 1 }}</td>
-            <td :class="{'inactive-product': !product.productIsActive}">{{ product.productName }}</td>
-            <td class="test-class" :class="{'inactive-product': !product.productIsActive}">{{ product.productUpc }}</td>
-            <td :class="{'inactive-product': !product.productIsActive}">
-              {{ product.productIsActive ? 'Aktiivne' : 'Mitteaktiivne' }}
-            </td>
-            <td>
-              <button type="button" class="btn btn-outline-success btn-sm"
-                      @click="navigateToProductProfile(product.productId)">View and Edit
-              </button>
-            </td>
-            <td v-if="!product.productIsActive">
-              <button type="button" class="btn btn-outline-success btn-sm"
-                      @click="this.changeProductStatusToActive(product.productId)">Activate
-              </button>
-            </td>
-
-
-          </tr>
-          </tbody>
-        </table>
+        <ProductsTable :filtered-products="filteredProducts"
+                       @navigate-to-product-profile="navigateToProductProfile"
+                       @change-product-status-to-active="changeProductStatusToActive"/>
         <p class="custom-warning-text">
           Mitteaktiivsed tooted ei kajastu otsingus.
         </p>
@@ -65,10 +30,12 @@
 
 <script>
 import router from "@/router";
+import ProductsTable from "@/views/ProductsTable.vue";
 
 
 export default {
   name: 'ProductsList',
+  components: {ProductsTable},
 
   data() {
     return {
