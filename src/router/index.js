@@ -29,7 +29,7 @@ const routes = [
   {
     path: '/products/new/materials',
     name: 'addMaterialsRoute',
-    component: AddProductMaterialsView
+    component: AddProductMaterialsView,
     }
 ]
 

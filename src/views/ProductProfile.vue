@@ -69,6 +69,7 @@ export default {
             componentId: 0,
             componentName: '',
             materialResponse: {
+              materialId: 0,
               materialName: '',
               materialDescription: ''
             }

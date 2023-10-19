@@ -7,23 +7,23 @@
         <div class="dropdown">
           <a class="btn btn-outline-success dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
              aria-expanded="false">
-            Sorteeri tooteid...
+            Sort Active Products
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" @click="selectedFilter='Aktiivsed'">Aktiivsed</a></li>
-            <li><a class="dropdown-item" href="#" @click="selectedFilter='Mitteaktiivsed'">Mitteaktiivsed</a></li>
-            <li><a class="dropdown-item" href="#" @click="selectedFilter='Kõik tooted'">Kõik tooted</a></li>
+            <li><a class="dropdown-item" href="#" @click="selectedFilter='Aktiivsed'">Active</a></li>
+            <li><a class="dropdown-item" href="#" @click="selectedFilter='Mitteaktiivsed'">Inactive</a></li>
+            <li><a class="dropdown-item" href="#" @click="selectedFilter='Kõik tooted'">All Products</a></li>
           </ul>
-          <button @click="$router.push({name: 'newProfileRoute'})" class="btn btn-outline-success">Lisa uus toode</button>
+          <button @click="$router.push({name: 'newProfileRoute'})" class="btn btn-outline-success">Add New Product</button>
         </div>
 
         <table class="table table-responsive-sm align-middle">
           <thead>
           <tr>
             <th></th>
-            <th>Toote nimi</th>
+            <th>Product Name</th>
             <th>UPC</th>
-            <th>Staatus</th>
+            <th>Status</th>
             <th></th>
             <th></th>
           </tr>
@@ -41,12 +41,12 @@
             </td>
             <td>
               <button type="button" class="btn btn-outline-success btn-sm"
-                      @click="navigateToProductProfile(product.productId)">Vaata ja muuda
+                      @click="navigateToProductProfile(product.productId)">View and Edit
               </button>
             </td>
             <td v-if="!product.productIsActive">
               <button type="button" class="btn btn-outline-success btn-sm"
-                      @click="this.changeProductStatusToActive(product.productId)">Aktiveeri
+                      @click="this.changeProductStatusToActive(product.productId)">Activate
               </button>
             </td>
 
