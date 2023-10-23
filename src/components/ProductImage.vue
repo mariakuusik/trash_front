@@ -1,5 +1,5 @@
 <template>
-  <img :src="imageDataBase64" class="img-fluid" alt="Product Image">
+  <img :src="imageDataBase64" class="img-fluid" alt="Product Image" title="imageAuthor">
 </template>
 
 <script>

@@ -12,9 +12,9 @@
     <tr v-for="(component, sequenceCounter) in productResponse.componentsResponse">
       <th>{{ sequenceCounter + 1 }}</th>
       <td>{{ component.componentName }}</td>
-      <td>{{ component.materialResponse.materialName }}</td>
-      <td>{{ component.materialResponse.materialDescription }}</td>
-      <td></td>
+      <td v-for="material in component.materialComponentResponse">{{ material.materialName }}</td>
+      <td v-for="material in component.materialComponentResponse">{{ material.materialDescription }}</td>
+
     </tr>
     </tbody>
   </table>
