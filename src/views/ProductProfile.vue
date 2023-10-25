@@ -1,5 +1,5 @@
 <template>
-  <ChangeMaterialsModal :product-response="productResponse" @update-product="handleProductUpdate"/>
+  <ChangeMaterialsModal :product-response="productResponse" @update-product="handleProductUpdate" ref="ModalRef"/>
   <div class="container text-center">
     <div class="row">
 
@@ -99,6 +99,10 @@ export default {
       }).catch(error => {
         const errorResponseBody = error.response.data
       })
+    },
+
+    sendReferenceInfoToModal() {
+      this.$refs.ChangeMaterialsModal.productInfo.productName = this.productResponse.productName
     },
 
 

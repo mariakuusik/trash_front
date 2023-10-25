@@ -12,13 +12,13 @@
             <div class="row">
               <div class="mb-3 text-start">
                 <label for="productName" class="form-label"> Product Name</label>
-                <input v-model="productResponse.productName" type="text" class="form-control" id="productName">
+                <input v-model="productInfo.productName" class="form-control" id="productName">
               </div>
             </div>
             <div class="row">
               <div class="mb-3 text-start">
                 <label for="productUpc" class="form-label">Product UPC</label>
-                <input v-model="productResponse.productUpc" type="text" class="form-control" id="productUpc">
+                <input v-model="productInfo.productUpc" class="form-control" id="productUpc">
               </div>
             </div>
           </div>
@@ -43,8 +43,8 @@ export default {
   data() {
     return {
       productInfo: {
-        productName: this.productResponse.productName,
-        productUpc: this.productResponse.productUpc
+        productName: '',
+        productUpc: ''
       },
     }
   },

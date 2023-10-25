@@ -5,7 +5,10 @@
 
     <div class="row justify-content-center">
       <div class="col col-5 text-center">
+
+
         <AlertSuccess :success-message="successMessage"></AlertSuccess>
+
         <select v-model="selectedMaterialId" @change="setMaterialIdAndSendRequest" class="form-select">
           <option selected disabled>Choose material</option>
           <option v-for="material in materialsResponse" :value="material.materialId" :key="material">
@@ -43,6 +46,8 @@
 
 
 <script>
+//TODO: kõigepealt too ära komponendid ja siis materjalid. ja siis meetod, mis saadab korraga komponent+materjal backi.
+//TODO: Post meetod on tehtud backis.
 import {useRoute} from "vue-router";
 import AlertSuccess from "@/components/alert/AlertSuccess.vue";
 import ProductComponentsAndMaterialsTable from "@/views/ProductComponentsAndMaterialsTable.vue";
@@ -50,8 +55,7 @@ import ProductComponentsAndMaterialsTable from "@/views/ProductComponentsAndMate
 export default {
   name: "AddProductMaterialsView",
   components: {ProductComponentsAndMaterialsTable, AlertSuccess},
-  props:{
-  },
+  props: {},
   data() {
     return {
       successMessage: '',
@@ -75,9 +79,8 @@ export default {
       addedComponent: {
         productId: this.productId,
         componentId: this.selectedComponentId
-
       },
-      productResponse: {}
+      productResponse: {},
     }
   },
   methods: {
@@ -101,11 +104,7 @@ export default {
     },
 
     getComponents() {
-      this.$http.get("/components/by-material", {
-            params: {
-              materialId: this.selectedMaterialId,
-            }
-          }
+      this.$http.get("/components", {}
       ).then(response => {
         this.componentResponse = response.data
       }).catch(error => {
@@ -128,7 +127,7 @@ export default {
     },
 
     handleSuccessMessage() {
-      this.successMessage='New Component Added to ' + this.productName
+      this.successMessage = 'New Component Added to ' + this.productName
       setTimeout(() => {
         this.successMessage = ''
       }, 1500)

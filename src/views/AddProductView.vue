@@ -47,7 +47,9 @@ export default {
         productName: '',
         productUpc: '',
         productIsActive: true,
-        imageData: ''
+        imageData: '',
+        binId: 0,
+        sortingId: 0
       },
       newProductResponse: {
         productId: 0
