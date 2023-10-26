@@ -96,14 +96,14 @@ export default {
 
     setMaterialIdAndSendRequest(materialId) {
       materialId = this.selectedMaterialId
-      this.getComponents()
+      this.getAllComponents()
     },
 
     setComponentId(componentId) {
       componentId = this.selectedComponentId
     },
 
-    getComponents() {
+    getAllComponents() {
       this.$http.get("/components", {}
       ).then(response => {
         this.componentResponse = response.data
