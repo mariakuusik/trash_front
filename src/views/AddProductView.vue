@@ -17,8 +17,14 @@
             <label for="floatingInput">Product UPC</label>
           </div>
           <select v-model="newProduct.productIsActive" class="form-select mb-4">
-            <option selected value='true' >Active</option>
+            <option value="0" selected disabled >Choose status</option>
+            <option value='true'>Active</option>
             <option value='false'>Not active</option>
+          </select>
+          If product has more than one component, add Bin information to each component separately.
+          <select v-model="newProduct.binId" class="form-select mb-4">
+            <option value="0" selected>No bin selected</option>
+            <option v-for="bin in binResponse" :value="bin.id">{{bin.name}}</option>
           </select>
         </div>
         <p>
@@ -33,7 +39,7 @@
 </template>
 
 <script>
-import ImageInput from "@/components/ImageInput.vue";
+import ImageInput from "@/components/image/ImageInput.vue";
 import router from "@/router";
 import AlertError from "@/components/alert/AlertError.vue";
 
@@ -58,15 +64,30 @@ export default {
         message: '',
         errorCode: 0
       },
+      binResponse: [
+        {
+          id: 0,
+          name: '',
+          comments: ''
+        }
+      ]
     }
   },
   methods: {
-
+    getAllBins() {
+      this.$http.get("/bins")
+          .then(response => {
+            this.binResponse = response.data
+          })
+          .catch(error => {
+            const errorResponseBody = error.response.data
+          })
+    },
     addNewProduct() {
       if (this.mandatoryFieldsAreFilled()) {
         this.sendNewProductProfile()
         sessionStorage.setItem('productName', this.newProduct.productName)
-      } else{
+      } else {
         this.errorResponse.message = 'Fill Mandatory Fields'
         setTimeout(() => {
           this.errorResponse.message = '';
@@ -78,7 +99,7 @@ export default {
       this.$http.post("/products/profile", this.newProduct
       ).then(response => {
         this.newProductResponse = response.data
-        router.push({name: 'addMaterialsRoute', query: {productId:this.newProductResponse.productId}})
+        router.push({name: 'addMaterialsRoute', query: {productId: this.newProductResponse.productId}})
       }).catch(error => {
         const errorResponseBody = error.response.data
       })
@@ -91,6 +112,9 @@ export default {
     mandatoryFieldsAreFilled() {
       return this.newProduct.productName.length > 0 && this.newProduct.productUpc.length > 0
     },
+  },
+  beforeMount() {
+    this.getAllBins()
   }
 }
 </script>

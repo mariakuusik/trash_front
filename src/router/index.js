@@ -4,6 +4,7 @@ import ProductsList from "@/views/ProductsList.vue";
 import ProductProfile from "@/views/ProductProfile.vue";
 import AddProductView from "@/views/AddProductView.vue";
 import AddProductMaterialsView from "@/views/AddProductMaterialsView.vue";
+import LoginView from "@/views/LoginView.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: '/products/new/materials',
     name: 'addMaterialsRoute',
     component: AddProductMaterialsView,
+    },
+  {
+    path: '/login',
+    name: 'loginRoute',
+    component: LoginView,
     }
 ]
 

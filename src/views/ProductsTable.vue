@@ -35,8 +35,11 @@
   </table>
 </template>
 <script>
+import LogoComponent from "@/components/image/LogoComponent.vue";
+
 export default {
   name: 'ProductsTable',
+  components: {LogoComponent},
   props: {
     filteredProducts: Array,
     navigateToProductProfile: Function

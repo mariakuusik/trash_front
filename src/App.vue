@@ -1,7 +1,8 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/products">Minu tooted</router-link>
+    <router-link to="/">Home</router-link>
+    <router-link to="/products">My Products</router-link>
+    <router-link to="/login">Log In</router-link>
   </nav>
   <router-view/>
 </template>
@@ -22,9 +23,12 @@ nav {
 nav a {
   font-weight: bold;
   color: #2c3e50;
+  padding: 15px;
+  text-decoration: none;
 }
 
+
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #71b095;
 }
 </style>

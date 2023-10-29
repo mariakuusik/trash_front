@@ -1,20 +1,25 @@
 <template>
   <ChangeMaterialsModal :product-response="productResponse" @update-product="handleProductUpdate" ref="ModalRef"/>
-  <div class="container text-center">
+  <div class="container text-center information-display-style">
     <div class="row">
 
       <div class="col col-lg-6">
-        <ul class="list-group list-group-flush text-start information-display-style">
-          <li class="list-group-item"><h2 class="display-5"> {{ productResponse.productName }}</h2></li>
-          <li class="list-group-item"><h2 class="display-6">UPC kood: {{ productResponse.productUpc }}</h2></li>
+        <ul class="list-group list-group-flush text-start">
+          <li class="list-group-item">
+            <h2 class="display-5"> {{ productResponse.productName }}</h2>
+          </li>
+          <li class="list-group-item">
+            <h2 class="display-6">UPC code: {{ productResponse.productUpc }}</h2>
+          </li>
         </ul>
-        <button type="button" class="btn my-standard-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-          Muuda toote andmeid
+        <button type="button" class="btn my-standard-button mb-3" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop">
+          Edit Info
         </button>
-        <div class="information-display-style">
+        <div>
           <ProductComponentsAndMaterialsTable :product-response="productResponse"/>
         </div>
-        <button class="btn my-standard-button">Muuda komponente ja materjale</button>
+        <button @click="sendReferenceInfoToModal" class="btn my-standard-button">Edit Components</button>
       </div>
 
       <div class="col col-lg-6">
@@ -30,7 +35,7 @@
 <script>
 import {useRoute} from "vue-router";
 import ChangeMaterialsModal from "@/components/modal/ChangeMaterialsModal.vue";
-import ProductImage from "@/components/ProductImage.vue";
+import ProductImage from "@/components/image/ProductImage.vue";
 import ProductComponentsAndMaterialsTable from "@/views/ProductComponentsAndMaterialsTable.vue";
 
 export default {
@@ -59,6 +64,11 @@ export default {
       imageResponse: {
         imageData: ''
       },
+      productUpdate: {
+        productId: Number(useRoute().query.productId),
+        productName: '',
+        productUpc: ''
+      },
       errorResponse:
           {
             message: '',
@@ -80,14 +90,17 @@ export default {
       })
     },
 
-    handleProductUpdate() {
-      this.$http.put("/products/profile"
+    handleProductUpdate(productInfo) {
+      this.productUpdate.productName = productInfo.productName
+      this.productUpdate.productUpc = productInfo.productUpc
+      this.$http.put("/products/profile", this.productUpdate
       ).then(response => {
-        const responseBody = response.data
+        this.getProductProfile()
       }).catch(error => {
         const errorResponseBody = error.response.data
       })
     },
+
     getProductImage() {
       this.$http.get("/image", {
             params: {
@@ -102,9 +115,9 @@ export default {
     },
 
     sendReferenceInfoToModal() {
-      this.$refs.ChangeMaterialsModal.productInfo.productName = this.productResponse.productName
-    },
-
+      this.$refs.ModalRef.productInfo.productName = this.productResponse.productName;
+      this.$refs.ModalRef.productInfo.productUpc = this.productResponse.productUpc;
+    }
 
   },
   beforeMount() {
@@ -117,12 +130,5 @@ export default {
 
 <style scoped>
 
-.information-display-style {
-  border: solid 1px grey;
-  border-radius: 10px;
-  padding: 5px;
-  margin-top: 50px;
-  margin-bottom: 20px;
-}
 
 </style>

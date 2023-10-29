@@ -50,7 +50,6 @@ export default {
   },
   methods: {
     updateProductInfo() {
-      this.productInfo = {...this.productResponse}
       this.$emit("update-product", this.productInfo)
     },
 

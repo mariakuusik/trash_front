@@ -1,10 +1,11 @@
 <template>
   <div class="container">
-    <h1 class="display-5 text-center mb-5">Tere, (ettevõtte nimi)</h1>
+    <LogoComponent/>
+    <h1 class="display-5 text-center m-4">Products of {companyName} </h1>
     <div class="row justify-content-center">
       <div class="col-sm-8">
         <div class="dropdown">
-          <a class="btn btn-outline-success dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+          <a class="btn btn-outline-success dropdown-toggle m-1" href="#" role="button" data-bs-toggle="dropdown"
              aria-expanded="false">
             Sort Active Products
           </a>
@@ -13,14 +14,14 @@
             <li><a class="dropdown-item" href="#" @click="selectedFilter='Mitteaktiivsed'">Inactive</a></li>
             <li><a class="dropdown-item" href="#" @click="selectedFilter='Kõik tooted'">All Products</a></li>
           </ul>
-          <button @click="$router.push({name: 'newProfileRoute'})" class="btn btn-outline-success">Add New Product</button>
+          <button @click="$router.push({name: 'newProfileRoute'})" class="btn btn-outline-success m-1">Add New Product</button>
         </div>
 
         <ProductsTable :filtered-products="filteredProducts"
                        @navigate-to-product-profile="navigateToProductProfile"
                        @change-product-status-to-active="changeProductStatusToActive"/>
         <p class="custom-warning-text">
-          Mitteaktiivsed tooted ei kajastu otsingus.
+          Inactive products cannot be searched by users that are not logged in.
         </p>
       </div>
     </div>
@@ -31,11 +32,12 @@
 <script>
 import router from "@/router";
 import ProductsTable from "@/views/ProductsTable.vue";
+import LogoComponent from "@/components/image/LogoComponent.vue";
 
 
 export default {
   name: 'ProductsList',
-  components: {ProductsTable},
+  components: {LogoComponent, ProductsTable},
 
   data() {
     return {
